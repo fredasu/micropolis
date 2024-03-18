@@ -211,7 +211,7 @@ public class TileConstants
 
 		// can we autobulldoze this tile?
 		if ((tileValue >= FIRSTRIVEDGE && tileValue <= LASTRUBBLE) ||
-			(tileValue >= LHPOWER && tileValue <= LVPOWER10) ||
+			(tileValue >= POWERBASE + 2 && tileValue <= POWERBASE + 12) ||
 			(tileValue >= TINYEXP && tileValue <= LASTTINYEXP))
 		{
 			return true;
