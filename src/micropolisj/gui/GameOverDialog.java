@@ -22,12 +22,6 @@ public class GameOverDialog extends JDialog
 {
 	Micropolis engine;
 
-	JSpinner taxRateEntry;
-	int origTaxRate;
-	double origRoadPct;
-	double origFirePct;
-	double origPolicePct;
-
 	JLabel roadFundRequest = new JLabel();
 	JLabel roadFundAlloc = new JLabel();
 	JSlider roadFundEntry;
@@ -44,17 +38,12 @@ public class GameOverDialog extends JDialog
 
 	static ResourceBundle strings = MainWindow.strings;
 
-	JCheckBox autoBudgetBtn = new JCheckBox(strings.getString("budgetdlg.auto_budget"));
-	JCheckBox pauseBtn = new JCheckBox(strings.getString("budgetdlg.pause_game"));
-
 	private void applyChange()
 	{
-		int newTaxRate = ((Number) taxRateEntry.getValue()).intValue();
 		int newRoadPct = ((Number) roadFundEntry.getValue()).intValue();
 		int newPolicePct = ((Number) policeFundEntry.getValue()).intValue();
 		int newFirePct = ((Number) fireFundEntry.getValue()).intValue();
 
-		engine.cityTax = newTaxRate;
 		engine.roadPercent = (double)newRoadPct / 100.0;
 		engine.policePercent = (double)newPolicePct / 100.0;
 		engine.firePercent = (double)newFirePct / 100.0;
@@ -67,7 +56,6 @@ public class GameOverDialog extends JDialog
 		BudgetNumbers b = engine.generateBudget();
 		if (updateEntries)
 		{
-		taxRateEntry.setValue(b.taxRate);
 		roadFundEntry.setValue((int)Math.round(b.roadPercent*100.0));
 		policeFundEntry.setValue((int)Math.round(b.policePercent*100.0));
 		fireFundEntry.setValue((int)Math.round(b.firePercent*100.0));
@@ -96,16 +84,9 @@ public class GameOverDialog extends JDialog
 	public GameOverDialog(Window owner, Micropolis engine)
 	{
 		super(owner);
-		setTitle(strings.getString("budgetdlg.title"));
+		setTitle(strings.getString("gameOverDlg.title"));
 
 		this.engine = engine;
-		this.origTaxRate = engine.cityTax;
-		this.origRoadPct = engine.roadPercent;
-		this.origFirePct = engine.firePercent;
-		this.origPolicePct = engine.policePercent;
-
-		// give text fields of the fund-level spinners a minimum size
-		taxRateEntry = new JSpinner(new SpinnerNumberModel(7,0,20,1));
 
 		// widgets to set funding levels
 		roadFundEntry = new JSlider(JSlider.HORIZONTAL, 0, 100, 100);
@@ -120,7 +101,6 @@ public class GameOverDialog extends JDialog
 			applyChange();
 		}
 		};
-		taxRateEntry.addChangeListener(change);
 		roadFundEntry.addChangeListener(change);
 		fireFundEntry.addChangeListener(change);
 		policeFundEntry.addChangeListener(change);
@@ -250,11 +230,6 @@ public class GameOverDialog extends JDialog
 		c0.anchor = c1.anchor = GridBagConstraints.WEST;
 		c0.gridy = c1.gridy = 0;
 		c0.weightx = c1.weightx = 0.5;
-		optionsPane.add(autoBudgetBtn, c0);
-		optionsPane.add(pauseBtn, c1);
-
-		autoBudgetBtn.setSelected(engine.autoBudget);
-		pauseBtn.setSelected(engine.simSpeed == Speed.PAUSED);
 
 		return optionsPane;
 	}
@@ -279,12 +254,9 @@ public class GameOverDialog extends JDialog
 		c2.weightx = 0.5;
 
 		c0.gridy = c1.gridy = c2.gridy = 0;
-		pane.add(new JLabel(strings.getString("budgetdlg.tax_rate_hdr")), c1);
-		pane.add(new JLabel(strings.getString("budgetdlg.annual_receipts_hdr")), c2);
 
 		c0.gridy = c1.gridy = c2.gridy = 1;
 		pane.add(new JLabel(strings.getString("budgetdlg.tax_revenue")), c0);
-		pane.add(taxRateEntry, c1);
 		pane.add(taxRevenueLbl, c2);
 
 		return pane;
@@ -292,26 +264,11 @@ public class GameOverDialog extends JDialog
 
 	private void onContinueClicked()
 	{
-		if (autoBudgetBtn.isSelected() != engine.autoBudget) {
-			engine.toggleAutoBudget();
-		}
-		if (pauseBtn.isSelected() && engine.simSpeed != Speed.PAUSED) {
-			engine.setSpeed(Speed.PAUSED);
-		}
-		else if (!pauseBtn.isSelected() && engine.simSpeed == Speed.PAUSED) {
-			engine.setSpeed(Speed.NORMAL);
-		}
-
 		dispose();
 	}
 
 	private void onResetClicked()
 	{
-		engine.cityTax = this.origTaxRate;
-		engine.roadPercent = this.origRoadPct;
-		engine.firePercent = this.origFirePct;
-		engine.policePercent = this.origPolicePct;
-		loadBudgetNumbers(true);
 	}
 
 	private JComponent makeBalancePane()
