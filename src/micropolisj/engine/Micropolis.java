@@ -2503,6 +2503,8 @@ public class Micropolis
 					z = MicropolisMessage.POP_10K_REACHED;
 				} else if (lastCityPop < 2000 && newPop >= 2000) {
 					z = MicropolisMessage.POP_2K_REACHED;
+				} else if (lastCityPop > 0 && newPop == 0) {
+					z = MicropolisMessage.POP_0_REACHED;
 				}
 				if (z != null) {
 					sendMessage(z);

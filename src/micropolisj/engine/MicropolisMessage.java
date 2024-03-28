@@ -60,7 +60,10 @@ public enum MicropolisMessage
 	RIOTING_REPORT,
 
 	// added by Jason
-	NO_NUCLEAR_PLANTS;
+	NO_NUCLEAR_PLANTS,
+
+	// added by Freda
+	POP_0_REACHED;
 
 	/** Whether the message should be displayed in the notification pane. */
 	public boolean useNotificationPane = false;
@@ -68,6 +71,7 @@ public enum MicropolisMessage
 	static
 	{
 	// not location-specific
+	POP_0_REACHED.useNotificationPane = true;	//might as well also use notif pane?
 	POP_2K_REACHED.useNotificationPane = true;
 	POP_10K_REACHED.useNotificationPane = true;
 	POP_50K_REACHED.useNotificationPane = true;

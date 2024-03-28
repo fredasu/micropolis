@@ -1561,6 +1561,13 @@ public class MainWindow extends JFrame
 		{
 			notificationPane.showMessage(engine, m, p.x, p.y);
 		}
+
+		if (m == MicropolisMessage.POP_0_REACHED)
+		{
+			GameOverDialog dlg = new GameOverDialog(this, getEngine());
+			dlg.setModal(true);
+			dlg.setVisible(true);
+		}
 	}
 
 	//implements Micropolis.Listener
