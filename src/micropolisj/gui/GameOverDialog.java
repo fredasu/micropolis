@@ -63,7 +63,7 @@ public class GameOverDialog extends JDialog
 		
 		setAutoRequestFocus_compat(false);
 		pack();
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);	//can't change read-only file
 		setLocationRelativeTo(owner);
 		getRootPane().registerKeyboardAction(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -89,6 +89,7 @@ public class GameOverDialog extends JDialog
 	private void onContinueClicked()
 	{
 		dispose();
+		System.exit(0);
 	}
 
 	private JComponent makeMessagePane()
