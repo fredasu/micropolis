@@ -1858,6 +1858,10 @@ public class Micropolis
 		b.operatingExpenses = b.roadFunded + b.fireFunded + b.policeFunded;
 		b.newBalance = b.previousBalance + b.taxIncome - b.operatingExpenses;
 
+		if (b.newBalance == 0) {
+			sendMessage(MicropolisMessage.NO_MONEY);
+		}
+
 		return b;
 	}
 
