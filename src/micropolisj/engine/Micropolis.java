@@ -129,6 +129,7 @@ public class Micropolis
 	int totalPop;
 	int lastCityPop;
 	boolean startNoRes = true;	//start off with no res
+	boolean loadGame = false;	//make sure game starts up so no false alarm about "no money"
 
 	// used in generateBudget()
 	int lastRoadTotal;
@@ -551,6 +552,7 @@ public class Micropolis
 
 	void simulate(int mod16)
 	{
+		loadGame = true;	//game better have started up by now
 		final int band = getWidth() / 8;
 
 		switch (mod16)
@@ -2232,9 +2234,14 @@ public class Micropolis
 		return lastCityPop;
 	}
 
-	public boolean getNoRes()
+	public boolean getNoRes()	//getter to not penalize starting off with 0 residents
 	{
 		return startNoRes;
+	}
+
+	public boolean getLoad()	//make sure no false alarm pop up at start for no money
+	{
+		return loadGame;
 	}
 
 	void makeSound(int x, int y, Sound sound)

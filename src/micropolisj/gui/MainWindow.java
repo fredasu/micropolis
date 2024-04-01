@@ -1387,6 +1387,7 @@ public class MainWindow extends JFrame
 				}
 			}
 			updateDateLabel();
+			reloadFunds();	//force it to update quickly
 			dirty2 = true;
 		}};
 		taskPerformer = wrapActionListener(taskPerformer);
@@ -1556,6 +1557,12 @@ public class MainWindow extends JFrame
 	private void reloadFunds()
 	{
 		fundsLbl.setText(formatFunds(getEngine().budget.totalFunds));
+		if ((getEngine().budget.totalFunds == 0) && getEngine().getLoad())
+		{
+			NoMoneyDialog dlg = new NoMoneyDialog(this, getEngine());
+			dlg.setModal(true);
+			dlg.setVisible(true);
+		}
 	}
 
 	//implements Micropolis.Listener
@@ -1566,13 +1573,6 @@ public class MainWindow extends JFrame
 		if (m.useNotificationPane && p != null)
 		{
 			notificationPane.showMessage(engine, m, p.x, p.y);
-		}
-
-		if (m == MicropolisMessage.NO_MONEY)
-		{
-			GameOverDialog dlg = new GameOverDialog(this, getEngine());
-			dlg.setModal(true);
-			dlg.setVisible(true);
 		}
 	}
 
