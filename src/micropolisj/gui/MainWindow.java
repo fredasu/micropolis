@@ -1337,6 +1337,12 @@ public class MainWindow extends JFrame
 
 		NumberFormat nf = NumberFormat.getInstance();
 		popLbl.setText(nf.format(getEngine().getCityPopulation()));
+		if ((getEngine().getCityPopulation() == 0) && (getEngine().getNoRes() == false))
+		{
+			GameOverDialog dlg = new GameOverDialog(this, getEngine());
+			dlg.setModal(true);
+			dlg.setVisible(true);
+		}
 	}
 
 	Timer simTimer;
@@ -1562,7 +1568,7 @@ public class MainWindow extends JFrame
 			notificationPane.showMessage(engine, m, p.x, p.y);
 		}
 
-		if (m == MicropolisMessage.POP_0_REACHED)
+		if (m == MicropolisMessage.NO_MONEY)
 		{
 			GameOverDialog dlg = new GameOverDialog(this, getEngine());
 			dlg.setModal(true);

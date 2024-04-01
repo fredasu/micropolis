@@ -63,7 +63,6 @@ public enum MicropolisMessage
 	NO_NUCLEAR_PLANTS,
 
 	// added by Freda
-	POP_0_REACHED,
 	NO_MONEY;
 
 	/** Whether the message should be displayed in the notification pane. */
@@ -72,7 +71,6 @@ public enum MicropolisMessage
 	static
 	{
 	// not location-specific
-	POP_0_REACHED.useNotificationPane = true;	//might as well also use notif pane?
 	POP_2K_REACHED.useNotificationPane = true;
 	POP_10K_REACHED.useNotificationPane = true;
 	POP_50K_REACHED.useNotificationPane = true;

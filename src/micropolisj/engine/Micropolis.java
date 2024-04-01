@@ -128,6 +128,7 @@ public class Micropolis
 
 	int totalPop;
 	int lastCityPop;
+	boolean startNoRes = true;	//start off with no res
 
 	// used in generateBudget()
 	int lastRoadTotal;
@@ -1858,10 +1859,6 @@ public class Micropolis
 		b.operatingExpenses = b.roadFunded + b.fireFunded + b.policeFunded;
 		b.newBalance = b.previousBalance + b.taxIncome - b.operatingExpenses;
 
-		if (b.newBalance == 0) {
-			sendMessage(MicropolisMessage.NO_MONEY);
-		}
-
 		return b;
 	}
 
@@ -2235,6 +2232,11 @@ public class Micropolis
 		return lastCityPop;
 	}
 
+	public boolean getNoRes()
+	{
+		return startNoRes;
+	}
+
 	void makeSound(int x, int y, Sound sound)
 	{
 		fireCitySound(sound, new CityLocation(x,y));
@@ -2507,14 +2509,16 @@ public class Micropolis
 					z = MicropolisMessage.POP_10K_REACHED;
 				} else if (lastCityPop < 2000 && newPop >= 2000) {
 					z = MicropolisMessage.POP_2K_REACHED;
-				} else if (lastCityPop > 0 && newPop == 0) {
-					z = MicropolisMessage.POP_0_REACHED;
 				}
 				if (z != null) {
 					sendMessage(z);
 				}
 			}
 			lastCityPop = newPop;
+			if (newPop != 0)
+			{
+				startNoRes = false;	//unactivate starting 0 res condition
+			}
 		}
 	}
 
