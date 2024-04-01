@@ -1387,6 +1387,7 @@ public class MainWindow extends JFrame
 				}
 			}
 			updateDateLabel();
+			reloadFunds();	//force it to update quickly
 			dirty2 = true;
 		}};
 		taskPerformer = wrapActionListener(taskPerformer);
