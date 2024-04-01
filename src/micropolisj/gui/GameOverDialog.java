@@ -11,30 +11,13 @@ package micropolisj.gui;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
 import java.util.*;
 
 import micropolisj.engine.*;
-import static micropolisj.gui.MainWindow.formatFunds;
-import static micropolisj.gui.MainWindow.formatGameDate;
 
 public class GameOverDialog extends JDialog
 {
 	Micropolis engine;
-
-	JLabel roadFundRequest = new JLabel();
-	JLabel roadFundAlloc = new JLabel();
-	JSlider roadFundEntry;
-
-	JLabel policeFundRequest = new JLabel();
-	JLabel policeFundAlloc = new JLabel();
-	JSlider policeFundEntry;
-
-	JLabel fireFundRequest = new JLabel();
-	JLabel fireFundAlloc = new JLabel();
-	JSlider fireFundEntry;
-
-	JLabel taxRevenueLbl = new JLabel();
 
 	static ResourceBundle strings = MainWindow.strings;
 
@@ -61,7 +44,6 @@ public class GameOverDialog extends JDialog
 			}});
 		buttonPane.add(continueBtn);
 		
-		setAutoRequestFocus_compat(false);
 		pack();
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);	//can't change read-only file
 		setLocationRelativeTo(owner);
@@ -71,19 +53,6 @@ public class GameOverDialog extends JDialog
 			}},
 			KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
 			JComponent.WHEN_IN_FOCUSED_WINDOW);
-	}
-
-	private void setAutoRequestFocus_compat(boolean v)
-	{
-		try
-		{
-			if (super.getClass().getMethod("setAutoRequestFocus", boolean.class) != null) {
-				super.setAutoRequestFocus(v);
-			}
-		}
-		catch (NoSuchMethodException e) {
-			// ok to ignore
-		}
 	}
 
 	private void onContinueClicked()
